@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MNIST Handwritten Digit Recognition</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #243047;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 15px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(25, 45, 80, 0.10);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 12px;
+            color: #1d3557;
+        }
+
+        .header p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .upload-section {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #d5dce7;
+            border-radius: 8px;
+            background: #f8fafc;
+        }
+
+        .hint {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn:hover {
+            background: #1d4ed8;
+        }
+
+        .result {
+            margin-top: 28px;
+            padding: 24px;
+            text-align: center;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 12px;
+        }
+
+        .result h2 {
+            color: #1d4ed8;
+            margin-bottom: 12px;
+        }
+
+        .digit {
+            font-size: 64px;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin: 12px 0;
+        }
+
+        .confidence {
+            color: #475569;
+            margin-top: 8px;
+        }
+
+        .error {
+            margin-bottom: 20px;
+            padding: 14px;
+            color: #b91c1c;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 25px 20px;
+            }
+
+            .header h1 {
+                font-size: 23px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+
+        <header class="header">
+            <h1>Handwritten Digit Recognition</h1>
+
+            <p>
+                Upload an image of a handwritten digit from 0 to 9
+                and let the Deep Learning model predict it.
+            </p>
+        </header>
+
+        {% if error %}
+            <div class="error" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <form
+            action="{{ url_for('predict_data_point') }}"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+            <div class="upload-section">
+                <label for="image">Upload Your Digit Image</label>
+
+                <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    accept="image/png, image/jpeg"
+                    required
+                >
+
+                <p class="hint">
+                    For best results, use a clear image containing
+                    one handwritten digit.
+                </p>
+            </div>
+
+            <button type="submit" class="btn">
+                Predict Digit
+            </button>
+        </form>
+
+        {% if prediction is defined and prediction is not none %}
+            <section class="result">
+                <h2>Prediction Result</h2>
+
+                <p>The predicted digit is:</p>
+
+                <div class="digit">{{ prediction }}</div>
+
+                {% if confidence is defined and confidence is not none %}
+                    <p class="confidence">
+                        Confidence:
+                        {{ "%.2f"|format(confidence * 100) }}%
+                    </p>
+                {% endif %}
+            </section>
+        {% endif %}
+
+        <a href="{{ url_for('home') }}" class="back-link">
+            Back to Home
+        </a>
+
+        <footer class="footer">
+            MNIST Handwritten Digit Recognition | Deep Learning Project
+        </footer>
+
+    </main>
+</body>
+</html>

@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | MNIST Digit Recognition</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #243047;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            padding: 45px 30px;
+            text-align: center;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(25, 45, 80, 0.10);
+        }
+
+        h1 {
+            color: #1d3557;
+            margin-bottom: 18px;
+            font-size: 30px;
+        }
+
+        p {
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 25px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: background 0.2s ease;
+        }
+
+        .btn:hover {
+            background: #1d4ed8;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <h1>Welcome to MNIST Digit Recognition</h1>
+
+        <p>
+            Recognize handwritten digits from 0 to 9 using
+            a Deep Learning model. Upload an image and let
+            the model predict the digit.
+        </p>
+
+        <a href="{{ url_for('index') }}" class="btn">
+            Start Prediction
+        </a>
+    </main>
+</body>
+</html>
